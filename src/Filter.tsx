@@ -16,17 +16,13 @@ export function Filter({ column, table }: propsFiler) {
       <InputBase
         type="number"
         value={(columnFilterValue as [number, number])?.[0] ?? ''}
-        onChange={(e) =>
-          column.setFilterValue((old: [number, number]) => [e.target.value, old?.[1]])
-        }
+        onChange={(e) => column.setFilterValue((old: [number, number]) => [e.target.value, old?.[1]])}
         placeholder={`Min`}
       />
       <InputBase
         type="number"
         value={(columnFilterValue as [number, number])?.[1] ?? ''}
-        onChange={(e) =>
-          column.setFilterValue((old: [number, number]) => [old?.[0], e.target.value])
-        }
+        onChange={(e) => column.setFilterValue((old: [number, number]) => [old?.[0], e.target.value])}
         placeholder={`Max`}
         inputProps={{ 'aria-label': 'search' }}
       />

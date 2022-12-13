@@ -1,3 +1,4 @@
+import { useReactTable, getCoreRowModel, getFilteredRowModel, flexRender } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -8,18 +9,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import {
-  useReactTable,
-  getCoreRowModel,
-  getFilteredRowModel,
-  flexRender,
-} from '@tanstack/react-table';
-
 import { schemeColumns } from './schemeColumns';
-import { Response } from './fakeData';
+import { Products } from './fakeData';
 import { Filter } from './Filter';
 
-export const TableLocal = ({ data }: { data: Response[] }) => {
+export const TableLocal = ({ data }: { data: Products[] }) => {
   const columns = useMemo(() => schemeColumns, []);
 
   const table = useReactTable({
@@ -29,7 +23,6 @@ export const TableLocal = ({ data }: { data: Response[] }) => {
     getFilteredRowModel: getFilteredRowModel(),
   });
   console.log(table.getState());
-
   return (
     <Box sx={{ width: '100%' }}>
       <TableContainer component={Paper}>
@@ -52,9 +45,7 @@ export const TableLocal = ({ data }: { data: Response[] }) => {
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
+                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                     );
                   })}
                   <TableCell> TODO{/* Add summary */}</TableCell>

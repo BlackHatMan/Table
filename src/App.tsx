@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { makeData, Response } from './fakeData';
+import { makeData, Products } from './fakeData';
 import { TableLocal } from './TableLocal';
 
 function App() {
-  const [data, setDate] = useState<Response[]>();
+  const [data, setDate] = useState<Products[]>();
 
   useEffect(() => {
     const endpoint1 = makeData(5);

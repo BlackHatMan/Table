@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Response } from './fakeData';
+import { Products } from './fakeData';
 
-export const schemeColumns: ColumnDef<Response>[] = [
+export const schemeColumns: ColumnDef<Products>[] = [
   {
     accessorFn: (row) => row.name,
     id: 'Name',
