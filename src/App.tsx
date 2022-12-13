@@ -8,7 +8,17 @@ function App() {
   useEffect(() => {
     const endpoint1 = makeData(5);
     const endpoint2 = makeData(5);
-    setDate([...endpoint1, ...endpoint2]);
+
+    const sortByDate = [...endpoint1, ...endpoint2]
+      .sort((a, b) => new Date(a.delivery_date).getTime() - new Date(b.delivery_date).getTime())
+      .map((el) => {
+        return {
+          ...el,
+          delivery_date: new Date(el.delivery_date).toLocaleDateString(),
+        };
+      });
+
+    setDate(sortByDate);
   }, []);
 
   if (!data) {

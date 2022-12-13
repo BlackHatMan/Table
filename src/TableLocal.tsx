@@ -57,7 +57,7 @@ export const TableLocal = ({ data }: { data: Response[] }) => {
                       </TableCell>
                     );
                   })}
-                  <TableCell> * Add summary{/* Add summary */}</TableCell>
+                  <TableCell> TODO{/* Add summary */}</TableCell>
                 </TableRow>
               );
             })}

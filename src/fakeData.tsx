@@ -19,7 +19,7 @@ const newResponse = (): Response => {
     qty: faker.datatype.number(199),
     volume: faker.datatype.number({ min: 5, max: 100 }),
     name: faker.commerce.productName(),
-    delivery_date: faker.date.recent(30).toLocaleString(),
+    delivery_date: faker.date.recent(30).toISOString(),
     currency: faker.finance.currencyCode(),
   };
 };
