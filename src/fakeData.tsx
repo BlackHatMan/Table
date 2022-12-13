@@ -9,10 +9,9 @@ export type Response = {
   name: string;
   delivery_date: string;
   currency: string;
-  subRows?: any;
 };
 
-const newPerson = (): Response => {
+const newResponse = (): Response => {
   return {
     id: faker.random.numeric(6),
     status: faker.helpers.shuffle<Response['status']>(['active', 'archive'])[0]!,
@@ -28,6 +27,6 @@ const newPerson = (): Response => {
 export function makeData(lens: number) {
   const arr = new Array(lens).fill(1);
   return arr.map(() => {
-    return newPerson();
+    return newResponse();
   });
 }
