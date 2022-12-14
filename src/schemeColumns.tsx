@@ -39,26 +39,33 @@ export const schemeColumns: ColumnDef<columnScheme>[] = [
     accessorFn: (row) => row.sum,
     id: 'Sum',
     cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
   },
   {
     accessorFn: (row) => row.currency,
     id: 'Currency',
     cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
   },
   {
     accessorFn: (row) => row.qty,
     id: 'qty',
     cell: (info) => info.getValue(),
-    footer: ({ table }) =>
-      table.getFilteredRowModel().rows.reduce((total, row) => total + (row.getValue('qty') as number), 0),
+    footer: ({ table }) => {
+      const totalQuantity = table
+        .getFilteredRowModel()
+        .rows.reduce((total, row) => total + (row.getValue('qty') as number), 0);
+      return `Общее количество: ${totalQuantity}`;
+    },
   },
   {
     accessorFn: (row) => row.volume,
     id: 'Volume',
     cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
+    footer: ({ table }) => {
+      const totalVolume = table
+        .getFilteredRowModel()
+        .rows.reduce((total, row) => total + (row.getValue('Volume') as number), 0);
+      return `Общий объем: ${totalVolume}`;
+    },
   },
   {
     accessorFn: (row) => row.status,

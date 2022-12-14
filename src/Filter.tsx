@@ -12,26 +12,28 @@ export function Filter({ column, table }: propsFiler) {
   const columnFilterValue = column.getFilterValue();
 
   return typeValue === 'number' ? (
-    <div>
+    <>
       <InputBase
         type="number"
         value={(columnFilterValue as [number, number])?.[0] ?? ''}
         onChange={(e) => column.setFilterValue((old: [number, number]) => [e.target.value, old?.[1]])}
-        placeholder={`Min`}
+        placeholder={`min`}
       />
       <InputBase
         type="number"
+        size="small"
         value={(columnFilterValue as [number, number])?.[1] ?? ''}
         onChange={(e) => column.setFilterValue((old: [number, number]) => [old?.[0], e.target.value])}
-        placeholder={`Max`}
+        placeholder={`max`}
         inputProps={{ 'aria-label': 'search' }}
       />
-    </div>
+    </>
   ) : (
     <InputBase
+      size="small"
       value={(columnFilterValue ?? '') as string}
       onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={`Search...`}
+      placeholder={`search...`}
       inputProps={{ 'aria-label': 'search' }}
     />
   );
