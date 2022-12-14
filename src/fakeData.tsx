@@ -1,15 +1,5 @@
 import { faker } from '@faker-js/faker';
-
-export type Products = {
-  id: string;
-  status: 'active' | 'archive';
-  sum: number;
-  qty: number;
-  volume: number;
-  name: string;
-  delivery_date: string;
-  currency: string;
-};
+import { Products } from './types';
 
 const newResponse = (): Products => {
   return {

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { makeData, Products } from './fakeData';
+import { makeData } from './fakeData';
 import { TableLocal } from './TableLocal';
+import { columnScheme } from './types';
 
 function App() {
-  const [data, setDate] = useState<Products[]>();
+  const [data, setDate] = useState<columnScheme[]>();
 
   useEffect(() => {
     const endpoint1 = makeData(5);
@@ -11,10 +12,10 @@ function App() {
 
     const sortByDate = [...endpoint1, ...endpoint2]
       .sort((a, b) => new Date(a.delivery_date).getTime() - new Date(b.delivery_date).getTime())
-      .map((el) => {
+      .map((product) => {
         return {
-          ...el,
-          delivery_date: new Date(el.delivery_date).toLocaleDateString(),
+          ...product,
+          total: (product.qty + product.sum).toString() + ' - ' + product.currency,
         };
       });
 

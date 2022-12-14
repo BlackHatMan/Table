@@ -5,15 +5,16 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import TableFooter from '@mui/material/TableFooter';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { schemeColumns } from './schemeColumns';
-import { Products } from './fakeData';
 import { Filter } from './Filter';
+import { columnScheme } from './types';
 
-export const TableLocal = ({ data }: { data: Products[] }) => {
+export const TableLocal = ({ data }: { data: columnScheme[] }) => {
   const columns = useMemo(() => schemeColumns, []);
 
   const table = useReactTable({
@@ -21,8 +22,9 @@ export const TableLocal = ({ data }: { data: Products[] }) => {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    enableMultiRowSelection: true,
   });
-  console.log(table.getState());
+
   return (
     <Box sx={{ width: '100%' }}>
       <TableContainer component={Paper}>
@@ -32,8 +34,8 @@ export const TableLocal = ({ data }: { data: Products[] }) => {
               {table.getFlatHeaders().map((header) => {
                 return (
                   <TableCell key={header.id}>
-                    {header.column.columnDef.id}
-                    <Filter column={header.column} table={table} />
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.column.getCanFilter() && <Filter column={header.column} table={table} />}
                   </TableCell>
                 );
               })}
@@ -48,11 +50,21 @@ export const TableLocal = ({ data }: { data: Products[] }) => {
                       <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                     );
                   })}
-                  <TableCell> TODO{/* Add summary */}</TableCell>
                 </TableRow>
               );
             })}
           </TableBody>
+          <TableFooter>
+            {table.getFooterGroups().map((footerGroup) => (
+              <TableRow key={footerGroup.id}>
+                {footerGroup.headers.map((header) => (
+                  <TableCell key={header.id}>
+                    {flexRender(header.column.columnDef.footer, header.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableFooter>
         </Table>
       </TableContainer>
     </Box>
