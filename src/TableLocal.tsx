@@ -39,10 +39,11 @@ export const TableLocal = ({ data }: { data: columnScheme[] }) => {
     enableMultiRowSelection: true,
   });
 
+  const selectedId = table.getSelectedRowModel().flatRows.map((row) => row.original.id);
+
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
 
-    const selectedId = table.getSelectedRowModel().flatRows.map((row) => row.original.id);
     table.resetColumnFilters();
     table.resetRowSelection();
     try {
@@ -59,14 +60,14 @@ export const TableLocal = ({ data }: { data: columnScheme[] }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: '100%', width: 1200, margin: '100px auto' }}>
-      <TableContainer component={Paper} sx={{ margin: '100px auto' }}>
+    <Box sx={{ maxWidth: '100%', width: 1440, margin: '100px auto' }}>
+      <TableContainer component={Paper} sx={{ margin: '100px auto', backgroundColor: 'black' }}>
         <Table sx={{ minWidth: 650 }} aria-label="table">
           <TableHead>
             <TableRow sx={{ verticalAlign: 'baseline' }}>
               {table.getFlatHeaders().map((header) => {
                 return (
-                  <TableCell key={header.id} sx={{ padding: 1 }}>
+                  <TableCell key={header.id} sx={{ padding: 1, fontSize: '1rem', fontWeight: 'bold' }}>
                     {flexRender(header.column.columnDef.header, header.getContext())}
                     {header.column.getCanFilter() && <Filter column={header.column} table={table} />}
                   </TableCell>
@@ -91,18 +92,18 @@ export const TableLocal = ({ data }: { data: columnScheme[] }) => {
           </TableBody>
           <TableFooter>
             {table.getFooterGroups().map((footerGroup) => (
-              <TableRow key={footerGroup.id}>
+              <StyledTableRow key={footerGroup.id}>
                 {footerGroup.headers.map((header) => (
                   <TableCell key={header.id}>
                     {flexRender(header.column.columnDef.footer, header.getContext())}
                   </TableCell>
                 ))}
-              </TableRow>
+              </StyledTableRow>
             ))}
           </TableFooter>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="error" onClick={handleClick}>
+      <Button disabled={!selectedId.length} variant="contained" color="error" onClick={handleClick}>
         Аннулировать
       </Button>
       <Popover
@@ -112,18 +113,15 @@ export const TableLocal = ({ data }: { data: columnScheme[] }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}
+        onClose={handleClick}
       >
-        <Box
-          component="form"
-          onSubmit={submitHandler}
-          sx={{ border: 1, p: 2, bgcolor: 'background.paper', borderRadius: 2 }}
-        >
+        <Box component="form" onSubmit={submitHandler} sx={{ border: 1, p: 2, borderRadius: 2 }}>
           <Typography>Вы уверены что хотите аннулировать товары:</Typography>
           <ul>
             {table.getSelectedRowModel().flatRows.map((row, i) => {
               return (
                 <li key={row.id + i}>
-                  <Typography> {row.original.name} </Typography>
+                  <Typography>{row.original.name}</Typography>
                 </li>
               );
             })}

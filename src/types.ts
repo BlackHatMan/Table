@@ -1,4 +1,4 @@
-export type Products = {
+export type Product = {
   id: string;
   status: 'active' | 'archive';
   sum: number;
@@ -9,4 +9,4 @@ export type Products = {
   currency: string;
 };
 
-export type columnScheme = Products & { total: string };
+export type columnScheme = Product & { total: string };

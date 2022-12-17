@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxProps } from '@mui/material';
+import { Box, Checkbox, CheckboxProps } from '@mui/material';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRef, useEffect } from 'react';
 import { columnScheme } from './types';
@@ -70,7 +70,15 @@ export const schemeColumns: ColumnDef<columnScheme>[] = [
   {
     accessorFn: (row) => row.status,
     id: 'Status',
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      const status = info.getValue() as string;
+      const backLight = status === 'active';
+      return (
+        <Box component="span" sx={{ bgcolor: backLight ? 'green' : 'grey', padding: 0.5, borderRadius: 1 }}>
+          {status}
+        </Box>
+      );
+    },
   },
   {
     accessorFn: (row) => row.delivery_date,
